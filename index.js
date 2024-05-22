@@ -9,7 +9,9 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 app.use(express.json());
 
 // MongoDB Connection URL
@@ -86,6 +88,7 @@ async function run() {
     app.get("/winter-cloth", async (req, res) => {
       let result;
       const limit = Number(req.query.limit);
+      // console.log(limit)
       if (limit) {
         result = await winterCloths.find({}).limit(limit).toArray();
         return res.send({
